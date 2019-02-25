@@ -1,6 +1,7 @@
 package cn.fh.springboot.starter.vertx.verticle;
 
 import cn.fh.springboot.starter.vertx.VertxProperties;
+import cn.fh.springboot.starter.vertx.error.VertxDeploymentException;
 import com.alibaba.fastjson.JSON;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -118,7 +119,7 @@ public class VerticleDeployBean implements ApplicationContextAware {
             }
 
         } catch (Throwable e) {
-            throw new IllegalStateException(e.getMessage());
+            throw new VertxDeploymentException("failed to deploy verticle", e);
         }
     }
 }

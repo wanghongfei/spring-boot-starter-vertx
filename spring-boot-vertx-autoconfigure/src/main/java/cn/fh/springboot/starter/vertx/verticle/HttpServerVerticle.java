@@ -3,6 +3,7 @@ package cn.fh.springboot.starter.vertx.verticle;
 import cn.fh.springboot.starter.vertx.VertxProperties;
 import cn.fh.springboot.starter.vertx.meta.BlockedHandler;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Route;
@@ -20,7 +21,7 @@ public class HttpServerVerticle extends AbstractVerticle {
     protected static int port = 8080;
 
     @Override
-    public void start() {
+    public void start(Future<Void> startFuture) {
         // 取出配置信息
         VertxProperties config = springContext.getBean(VertxProperties.class);
         Integer port = springContext.getEnvironment().getProperty("server.port", Integer.class);
@@ -34,7 +35,14 @@ public class HttpServerVerticle extends AbstractVerticle {
         addHandlers(router, config.getHandlerMappings());
 
         server.requestHandler(router)
-                .listen(HttpServerVerticle.port);
+                .listen(HttpServerVerticle.port, res -> {
+                    if (res.succeeded()) {
+                        startFuture.complete();
+
+                    } else {
+                        startFuture.fail(res.cause());
+                    }
+                });
     }
 
     /**

@@ -41,6 +41,7 @@ vertx:
 
 ```java
 @Component
+// @BlockedHandler
 @Slf4j
 public class DemoHandler implements Handler<RoutingContext> {
     @Override
@@ -51,7 +52,9 @@ public class DemoHandler implements Handler<RoutingContext> {
 }
 ```
 
-所有的Handler都会在vertx的NIO线程中执行，所以不要在handler中出现阻塞调用。如需调用会阻塞线程的方法，必须使用vertx的异步编程方式：
+所有的Handler都会在vertx的NIO线程中执行，所以不要在handler中出现阻塞调用。
+
+如需调用会阻塞线程的方法，可以在Handler上添加`@BlockedHandler`注解，带有此注解的Handler会在vertx的worker线程池中执行; 或者使用vertx的异步编程方式：
 
 ```java
         Future<String> fut1 = Future.future();

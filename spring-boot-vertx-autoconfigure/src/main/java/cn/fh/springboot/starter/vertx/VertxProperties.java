@@ -1,5 +1,6 @@
 package cn.fh.springboot.starter.vertx;
 
+import io.vertx.core.http.HttpMethod;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,8 @@ public class VertxProperties {
          * 请求路径
          */
         private String path;
+
+        private HttpMethod method = HttpMethod.GET;
         /**
          * 对应Spring里的bean名
          */

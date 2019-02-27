@@ -56,15 +56,84 @@ public class HttpServerVerticle extends AbstractVerticle {
             for (String beanName : hm.getBeanNames()) {
                 Handler<RoutingContext> handler = (Handler<RoutingContext>) springContext.getBean(beanName);
 
-                Route route = router.route(hm.getPath());
-                if (isBlocked(handler)) {
-                    route.blockingHandler(handler);
+                switch (hm.getMethod()) {
+                    case GET:
+                        addHandler(
+                                router.get(hm.getPath()),
+                                handler
+                        );
+                        break;
 
-                } else {
-                    route.handler(handler);
+                    case PUT:
+                        addHandler(
+                                router.put(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case HEAD:
+                        addHandler(
+                                router.head(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case POST:
+                        addHandler(
+                                router.post(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case PATCH:
+                        addHandler(
+                                router.patch(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case TRACE:
+                        addHandler(
+                                router.trace(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case DELETE:
+                        addHandler(
+                                router.trace(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case CONNECT:
+                        addHandler(
+                                router.connect(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case OPTIONS:
+                        addHandler(
+                                router.options(hm.getPath()),
+                                handler
+                        );
+                        break;
+
+                    case OTHER:
+                        // ignore
+                        break;
                 }
-
             }
+        }
+    }
+
+    private void addHandler(Route route, Handler<RoutingContext> handler) {
+        if (isBlocked(handler)) {
+            route.blockingHandler(handler);
+
+        } else {
+            route.handler(handler);
         }
     }
 

@@ -62,7 +62,7 @@ public class VerticleDeployBean implements ApplicationContextAware {
                 );
             }
 
-            log.info("mapping {} to {}", hm.getPath(), classNames);
+            log.info("mapping {} {} to {}", hm.getMethod().name(), hm.getPath(), classNames);
         }
 
     }

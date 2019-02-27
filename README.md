@@ -33,6 +33,7 @@ vertx:
   handler-mappings:
     # path为/demo的请求, 会依次经过homeHander, demoHandler
     - path: /demo
+      method: POST
       # spring bean名
       beanNames: homeHandler,demoHandler
 ```

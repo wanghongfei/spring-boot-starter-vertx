@@ -10,7 +10,7 @@ Spring Boot无缝集成vertx-web框架。
 <dependency>
 	<groupId>cn.fh</groupId>
 	<artifactId>spring-boot-starter-vertx</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.5-SNAPSHOT</version>
 </dependency>
 ```
 
